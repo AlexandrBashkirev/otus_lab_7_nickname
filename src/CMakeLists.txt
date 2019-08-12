@@ -1,6 +1,6 @@
 list(APPEND ${PROJECT_NAME}_SOURCES
-    nickname_main.cpp,
-    RadixTree.cpp,
+    nickname_main.cpp
+    RadixTree.cpp
     RadixTreeNode.cpp
 )
 
