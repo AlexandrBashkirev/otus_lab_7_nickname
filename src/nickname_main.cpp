@@ -2,8 +2,20 @@
 //
 
 #include <iostream>
+#include "RadixTree.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	flaber::radix_tree tree;
+
+	std::string line;
+	while (std::getline(std::cin, line) && line.find("$") != 0)
+		tree.insert(line);
+
+	for (auto it : tree)
+		std::cout << it.first << " " << it.second << std::endl;
+
+	std::cout << std::endl;
+
+	std::cout << tree;
 }
