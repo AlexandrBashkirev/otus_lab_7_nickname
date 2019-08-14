@@ -9,7 +9,7 @@ namespace flaber {
 		template<typename S>
 		radix_tree_node(S&& _str, bool _isEnd) : str(std::forward<S>(_str)), isEnd(_isEnd) {}
 
-		radix_tree_node() {};
+		radix_tree_node()  : str(""), isEnd(false) {};
 
 		void insert(std::string&);
 		void print(std::ostream&, const std::string& offset = "") const;
