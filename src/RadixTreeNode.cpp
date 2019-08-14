@@ -50,7 +50,11 @@ void flaber::radix_tree_node::devide_node(std::string::iterator& iter)
 	childs.push_back(std::move(newNode));
 	str = beforeTmp;
 }
-void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset) const
+void flaber::radix_tree_node::print(std::ostream& os) const
+{
+	print(os, "", false);
+}
+void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset, bool draw_line) const
 {
 	if (str.size() > 0 || isEnd)
 		os << offset << "+ " << str << (isEnd ? "$" : "") << std::endl;
@@ -59,9 +63,9 @@ void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset)
 	for (auto ch : childs) {
 		std::string newOffset = offset;
 		if (str.size() > 0 || isEnd)
-			newOffset = (i < childs.size() - 1) ? "| " + offset : "- " + offset;
+			newOffset = draw_line ? offset + "| " : offset + "  ";
 
-		ch.print(os, newOffset);
+		ch.print(os, newOffset, childs.size() > 1 && i < childs.size() -1);
 		++i;
 	}
 }

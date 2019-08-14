@@ -12,9 +12,11 @@ namespace flaber {
 		radix_tree_node()  : str(""), isEnd(false) {};
 
 		void insert(std::string&);
-		void print(std::ostream&, const std::string& offset = "") const;
+		void print(std::ostream&) const;
+
 	private:
 
+		void print(std::ostream&, const std::string& offset, bool draw_linw) const;
 		void devide_node(std::string::iterator&);
 
 		std::string str;
