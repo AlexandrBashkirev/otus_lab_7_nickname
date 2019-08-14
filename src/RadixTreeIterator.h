@@ -79,9 +79,11 @@ namespace flaber {
 			}
 			else if (node_stack.size() > 0)
 			{
+				auto& node = node_stack.top().second;
 				current_prefix = node_stack.top().first;
-				checkNode(node_stack.top().second);
 				node_stack.pop();
+
+				checkNode(node);
 			}
 			else
 				current = nullptr;

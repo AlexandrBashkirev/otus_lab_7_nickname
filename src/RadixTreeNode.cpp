@@ -1,4 +1,4 @@
-// nickname.cpp : This file contains the 'main' function. Program execution begins and ends there.
+﻿// nickname.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "RadixTreeNode.h"
@@ -52,12 +52,16 @@ void flaber::radix_tree_node::devide_node(std::string::iterator& iter)
 }
 void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset) const
 {
-	std::string newOffset = offset;
-
-	if (str.size() > 0 || isEnd) {
-		newOffset += "| ";
+	if (str.size() > 0 || isEnd)
 		os << offset << "+ " << str << (isEnd ? "$" : "") << std::endl;
-	}
-	for (auto ch : childs)
+
+	int i = 0;
+	for (auto ch : childs) {
+		std::string newOffset = offset;
+		if (str.size() > 0 || isEnd)
+			newOffset = (i < childs.size() - 1) ? "| " + offset : "- " + offset;
+
 		ch.print(os, newOffset);
+		++i;
+	}
 }
