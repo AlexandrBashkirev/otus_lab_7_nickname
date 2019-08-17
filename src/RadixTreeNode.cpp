@@ -14,14 +14,14 @@ void flaber::radix_tree_node::insert(std::string& str)
 		auto its = std::mismatch(it->second.str.begin(), it->second.str.end(), str.begin(), str.end());
 
 		// new string included in current node, devide node
-		if ((its.first - it->second.str.begin()) == str.size()) {
+		if (its.second == str.end()) {
 			if (its.first == it->second.str.end())
 				it->second.isEnd = true;
 			else 
 				it->second.devide_node(its.first);
 		}else
 		// new string contains current node, go deeper
-		if ((its.second - str.begin()) == it->second.str.size()) {
+		if (its.first == it->second.str.end()) {
 			std::string afterTmp(its.second, str.end());
 			it->second.insert(afterTmp);
 		}
@@ -44,7 +44,6 @@ void flaber::radix_tree_node::devide_node(std::string::iterator& iter)
 
 	radix_tree_node newNode(afterTmp, true);
 	newNode.childs.swap(childs);
-	//childs.clear();
 	childs.insert(std::pair<char, radix_tree_node>(afterTmp[0], newNode));
 	str = beforeTmp;
 }
