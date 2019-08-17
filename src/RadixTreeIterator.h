@@ -53,12 +53,12 @@ namespace flaber {
 		radix_tree_iterator() = delete;
 
 		std::string current_prefix;
-		node_type* current;
+		const node_type* current;
 		value_type value;
 
-		std::stack<std::pair<std::string, node_type*>> node_stack;
+		std::stack<std::pair<const std::string, const node_type&>> node_stack;
 
-		void find_next(flaber::radix_tree_node* node)
+		void find_next(const flaber::radix_tree_node* node)
 		{
 			if (node == nullptr)
 				return;
@@ -69,12 +69,12 @@ namespace flaber {
 				std::string local_current_prefix = current_prefix;
 
 				bool nodeFinded = false;
-				for (auto& child_node : node->childs)
+				for (const auto& child_node : node->childs)
 				{
 					if (!nodeFinded)
-						nodeFinded = checkNode(&child_node.second);
+						nodeFinded = checkNode(child_node.second);
 					else
-						node_stack.push(std::pair<std::string, node_type*>(local_current_prefix, &child_node.second));
+						node_stack.push(std::pair<const std::string, const node_type&>(local_current_prefix, child_node.second));
 				}
 			}
 			else if (node_stack.size() > 0)
@@ -88,18 +88,18 @@ namespace flaber {
 			else
 				current = nullptr;
 		}
-		bool checkNode(flaber::radix_tree_node* node)
+		bool checkNode(const flaber::radix_tree_node& node)
 		{
-			if (node->isEnd)
+			if (node.isEnd)
 			{
-				value.first = current_prefix + node->str;
-				value.second = (node->str.size() > 0 ? current_prefix + node->str[0] : "");
-				current = node;
+				value.first = current_prefix + node.str;
+				value.second = (node.str.size() > 0 ? current_prefix + node.str[0] : "");
+				current = &node;
 				return true;
 			}
 			else
 			{
-				find_next(node);
+				find_next(&node);
 				return true;
 			}
 			return false;

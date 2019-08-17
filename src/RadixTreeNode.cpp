@@ -60,7 +60,7 @@ void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset,
 		if (str.size() > 0 || isEnd)
 			newOffset = draw_line ? offset + "| " : offset + "  ";
 
-		ch.second.print(os, newOffset, childs.size() > 1 && i < childs.size() -1);
+		ch.second.print(os, newOffset, childs.size() > 1u && i < childs.size() -1);
 		++i;
 	}
 }
