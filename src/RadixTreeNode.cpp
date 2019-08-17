@@ -54,7 +54,7 @@ void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset,
 	if (str.size() > 0 || isEnd)
 		os << offset << "+ " << str << (isEnd ? "$" : "") << std::endl;
 
-	int i = 0;
+	size_t i = 0;
 	for (const auto& ch : childs) {
 		std::string newOffset = offset;
 		if (str.size() > 0 || isEnd)
