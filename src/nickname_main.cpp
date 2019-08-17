@@ -9,7 +9,7 @@ int main()
 	flaber::radix_tree tree;
 
 	std::string line;
-	while (std::getline(std::cin, line) && line.find("$") != 0)
+	while (std::getline(std::cin, line))
 		tree.insert(line);
 
 	for (auto it : tree)
