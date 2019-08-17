@@ -72,9 +72,9 @@ namespace flaber {
 				for (auto& child_node : node->childs)
 				{
 					if (!nodeFinded)
-						nodeFinded = checkNode(&child_node);
+						nodeFinded = checkNode(&child_node.second);
 					else
-						node_stack.push(std::pair<std::string, node_type*>(local_current_prefix, &child_node));
+						node_stack.push(std::pair<std::string, node_type*>(local_current_prefix, &child_node.second));
 				}
 			}
 			else if (node_stack.size() > 0)

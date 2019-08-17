@@ -7,37 +7,35 @@
 
 void flaber::radix_tree_node::insert(std::string& str)
 {
-	auto it = std::find_if(childs.begin(), childs.end(), [&](const radix_tree_node& node) {
-		return *str.begin() == *node.str.begin();
-		});
+	auto it = childs.find(str[0]);
 
 	if (it != childs.end())
 	{
-		auto its = std::mismatch(it->str.begin(), it->str.end(), str.begin(), str.end());
+		auto its = std::mismatch(it->second.str.begin(), it->second.str.end(), str.begin(), str.end());
 
 		// new string included in current node, devide node
-		if ((its.first - it->str.begin()) == str.size()) {
-			if (its.first == it->str.end())
-				it->isEnd = true;
+		if ((its.first - it->second.str.begin()) == str.size()) {
+			if (its.first == it->second.str.end())
+				it->second.isEnd = true;
 			else 
-				it->devide_node(its.first);
+				it->second.devide_node(its.first);
 		}else
 		// new string contains current node, go deeper
-		if ((its.second - str.begin()) == it->str.size()) {
+		if ((its.second - str.begin()) == it->second.str.size()) {
 			std::string afterTmp(its.second, str.end());
-			it->insert(afterTmp);
+			it->second.insert(afterTmp);
 		}
 		else // string intersect
 		{
-			it->devide_node(its.first);
+			it->second.devide_node(its.first);
 
-			it->isEnd = false;
+			it->second.isEnd = false;
 			std::string afterTmpNew(its.second, str.end());
-			it->insert(afterTmpNew);
+			it->second.insert(afterTmpNew);
 		}
 	}
 	else 
-		childs.emplace_back(str, true);
+		childs.insert(std::pair<char, radix_tree_node>(str[0], radix_tree_node(str, true)));
 }
 void flaber::radix_tree_node::devide_node(std::string::iterator& iter)
 {
@@ -45,9 +43,9 @@ void flaber::radix_tree_node::devide_node(std::string::iterator& iter)
 	std::string afterTmp(iter, str.end());
 
 	radix_tree_node newNode(afterTmp, true);
-	newNode.childs.insert(newNode.childs.begin(), childs.begin(), childs.end());
-	childs.clear();
-	childs.push_back(std::move(newNode));
+	newNode.childs.swap(childs);
+	//childs.clear();
+	childs.insert(std::pair<char, radix_tree_node>(afterTmp[0], newNode));
 	str = beforeTmp;
 }
 void flaber::radix_tree_node::print(std::ostream& os) const
@@ -65,7 +63,7 @@ void flaber::radix_tree_node::print(std::ostream& os, const std::string& offset,
 		if (str.size() > 0 || isEnd)
 			newOffset = draw_line ? offset + "| " : offset + "  ";
 
-		ch.print(os, newOffset, childs.size() > 1 && i < childs.size() -1);
+		ch.second.print(os, newOffset, childs.size() > 1 && i < childs.size() -1);
 		++i;
 	}
 }
