@@ -9,7 +9,7 @@ namespace flaber {
 	class radix_tree
 	{
 	public:
-		void insert(std::string str);
+		void insert(std::string& str);
 
 		radix_tree_iterator begin();
 		radix_tree_iterator end();

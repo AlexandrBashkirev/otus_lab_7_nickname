@@ -12,7 +12,7 @@ int main()
 	while (std::getline(std::cin, line))
 		tree.insert(line);
 
-	for (auto it : tree)
+	for (const auto& it : tree)
 		std::cout << it.first << " " << it.second << std::endl;
 
 	std::cout << std::endl;

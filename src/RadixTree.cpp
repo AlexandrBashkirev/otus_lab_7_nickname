@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <iostream>
 
-void flaber::radix_tree::insert(std::string str)
+void flaber::radix_tree::insert(std::string& str)
 {
 	if(str.size() > 0)
 		rootNode.insert(str);
