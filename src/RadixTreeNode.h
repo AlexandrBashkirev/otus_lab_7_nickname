@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include <unordered_map>
+//#include <unordered_map>
+#include <map>
 
 namespace flaber {
 
@@ -21,7 +22,7 @@ namespace flaber {
 
 		std::string str;
 		bool isEnd;
-		std::unordered_map<char, radix_tree_node> childs;
+		std::map<char, radix_tree_node> childs;
 
 		friend class radix_tree_iterator;
 	};

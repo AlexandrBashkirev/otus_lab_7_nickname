@@ -5,7 +5,7 @@
 
 void flaber::radix_tree_node::insert(std::string& str)
 {
-	/*auto it = childs.find(str[0]);
+	auto it = childs.find(str[0]);
 
 	if (it != childs.end())
 	{
@@ -33,7 +33,7 @@ void flaber::radix_tree_node::insert(std::string& str)
 		}
 	}
 	else 
-		childs.insert(std::pair<char, radix_tree_node>(str[0], radix_tree_node(str, true)));*/
+		childs.insert(std::pair<char, radix_tree_node>(str[0], radix_tree_node(str, true)));
 }
 void flaber::radix_tree_node::devide_node(std::string::iterator& iter)
 {
